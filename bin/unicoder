@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/unicoder"
+require "rationalist"
+
+args = Rationalist.parse
+command = args[:_][0]
+identifier = args[:_][1]
+KNOWN_OPTIONS = [:version, :help, :verbose, :format, :gzip]
+options = args.select { |option,| KNOWN_OPTIONS.include? option }
+
+if options.has_key?(:version)
+  puts "unicoder #{Unicoder::VERSION}"
+elsif options.has_key?(:help)
+  puts <<USAGE_INSTRUCTIONS
+
+  USAGE
+
+    unicoder fetch <data_identifier>
+    unicoder build <builder_name> <output_file>
+
+  DATA FILE IDENTIFIERS
+
+    …
+
+  BUILDERS
+
+    …
+
+USAGE_INSTRUCTIONS
+else
+  case command
+  when "fetch"
+    Unicoder::Downloader.fetch(identifier, **options)
+  when "build"
+    Unicoder::Builder.build(identifier, **options)
+  else
+    raise ArgumentError, "Unknown unicoder command!"
+  end
+end
