@@ -1,6 +1,6 @@
 module Unicoder
   module Builder
-    class NumericalValue
+    class NumericValue
       include Builder
 
       def initialize_index
@@ -18,7 +18,9 @@ module Unicoder
           end
         end
 
-        p @index
+        parse_file :unihan_numeric_values, :line, regex: /^U\+(?<codepoint>\S+)\s+\S+\s+(?<value>\S+)$/ do |line|
+          @index[line["codepoint"].to_i(16)] = line["value"].to_i
+        end
       end
     end
   end

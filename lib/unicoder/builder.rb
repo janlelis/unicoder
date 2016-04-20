@@ -27,7 +27,8 @@ module Unicoder
       filename = UNICODE_FILES[identifier.to_sym] || filename
       raise ArgumentError, "No valid file identifier or filename given" if !filename
       filename.sub! 'VERSION', @unicode_version
-      Downloader.fetch(identifier) unless File.exists?(filename)
+      filename.sub! '.zip', ''
+      Downloader.fetch(identifier) unless File.exists?(LOCAL_DATA_DIRECTORY + filename)
       file = File.read(LOCAL_DATA_DIRECTORY + filename)
 
       if parse_mode == :line

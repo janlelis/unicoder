@@ -24,6 +24,7 @@ module Unicoder
     script_extensions:        "/VERSION/ucd/ScriptExtensions.txt",
     property_value_aliases:   "/VERSION/ucd/PropertyValueAliases.txt",
     general_categories:       "/VERSION/ucd/extracted/DerivedGeneralCategory.txt",
+    unihan_numeric_values:    "/VERSION/ucd/Unihan.zip/Unihan_NumericValues.txt",
   }
 end
 
