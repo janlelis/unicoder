@@ -1,7 +1,7 @@
 module Unicoder
   VERSION = "0.1.0".freeze
 
-  CURRENT_UNICODE_VERSION = "8.0.0".freeze
+  CURRENT_UNICODE_VERSION = "9.0.0".freeze
 
   UNICODE_VERSIONS = %w[
      6.3.0
