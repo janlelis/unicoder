@@ -1,3 +1,5 @@
 Gemfile.lock
 /pkg
 /data
+*.marshal
+*.marshal.gz
