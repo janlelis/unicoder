@@ -14,23 +14,18 @@ module Unicoder
       end
 
       def parse!
-        parse_file :unicode_data, :line, regex: /^(?<codepoint>.+?);(?<range><(?!control).+>)?.*?;(?<category>.+?);.*$/ do |line|
-          if line["range"]
-            if line["range"] =~ /First/
-              @range_start = line["codepoint"].to_i(16)
-            elsif line["range"] =~ /Last/ && @range_start
-              (@range_start..line["codepoint"].to_i(16)).each{ |codepoint|
-                assign_codepoint(codepoint, line["category"], @index[:CATEGORIES])
-              }
-            else
-              raise ArgumentError, "inconsistent range found in data, don't know what to do"
-            end
+        parse_file :general_categories, :line, regex: /^(?<from>[^. ]+)(?:..(?<to>\S+))?\s*; (?<category>\S+).*$/ do |line|
+          if line["to"]
+            (line["from"].to_i(16)..line["to"].to_i(16)).each{ |codepoint|
+              assign_codepoint(codepoint, line["category"] == "Cn" ? nil : line["category"], @index[:CATEGORIES])
+            }
           else
-            assign_codepoint(line["codepoint"].to_i(16), line["category"], @index[:CATEGORIES])
+            assign_codepoint(line["from"].to_i(16), line["category"] == "Cn" ? nil : line["category"], @index[:CATEGORIES])
           end
         end
 
         4.times{ compress! @index[:CATEGORIES] }
+        remove_trailing_nils! @index[:CATEGORIES]
 
         parse_file :property_value_aliases, :line, regex: /^gc ; (?<short>\S{2}?) *; (?<long>\S+).*$/ do |line|
           @index[:CATEGORY_NAMES][line["short"]] = line["long"]

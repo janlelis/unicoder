@@ -59,6 +59,28 @@ module Unicoder
         end
       }
     end
-  
+
+    def remove_trailing_nils!(index = @index)
+      index.each{ |plane|
+        if plane.is_a?(Array)
+          plane.pop while plane[-1] == nil
+          plane.each{ |row|
+            if row.is_a?(Array)
+            row.pop while row[-1] == nil
+            row.each{ |byte|
+              if byte.is_a?(Array)
+                byte.pop while byte[-1] == nil
+                byte.each{ |nibble|
+                  if nibble.is_a?(Array)
+                    nibble.pop while nibble[-1] == nil
+                  end
+                }
+              end
+            }
+            end
+        }
+        end
+      }
+    end
   end
 end
