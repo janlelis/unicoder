@@ -3,12 +3,23 @@ module Unicoder
     class Name
       include Builder
 
+      JAMO_INITIAL = 4352
+      JAMO_MEDIAL = 4449
+      JAMO_FINAL = 4520
+      JAMO_END = 4697
+
       def initialize_index
         @index = {
           NAMES: {},
           ALIASES: {},
           CJK: [],
           HANGUL: [],
+          # see https://en.wikipedia.org/wiki/Korean_language_and_computers#Hangul_Syllables_Area
+          JAMO: {
+            INITIAL: [],
+            MEDIAL: [],
+            FINAL: [nil],
+          },
         }
         @range_start = nil
       end
@@ -39,6 +50,17 @@ module Unicoder
           @index[:ALIASES][line["codepoint"].to_i(16)] ||= {}
           @index[:ALIASES][line["codepoint"].to_i(16)][line["type"].to_sym] ||= []
           @index[:ALIASES][line["codepoint"].to_i(16)][line["type"].to_sym] << line["alias"]
+        end
+
+        parse_file :jamo, :line, regex: /^(?<codepoint>.+?); (?<short_name>.*?) +#.*$/ do |line|
+          case line["codepoint"].to_i(16)
+          when JAMO_INITIAL...JAMO_MEDIAL
+            @index[:JAMO][:INITIAL] << line["short_name"]
+          when JAMO_MEDIAL...JAMO_FINAL
+            @index[:JAMO][:MEDIAL] << line["short_name"]
+          when JAMO_FINAL..JAMO_END
+            @index[:JAMO][:FINAL] << line["short_name"]
+          end
         end
       end
     end

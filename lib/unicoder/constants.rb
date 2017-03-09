@@ -25,6 +25,7 @@ module Unicoder
     property_value_aliases:   "/VERSION/ucd/PropertyValueAliases.txt",
     general_categories:       "/VERSION/ucd/extracted/DerivedGeneralCategory.txt",
     unihan_numeric_values:    "/VERSION/ucd/Unihan.zip/Unihan_NumericValues.txt",
+    jamo:                     "/VERSION/ucd/Jamo.txt",
   }
 end
 
