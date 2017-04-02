@@ -6,13 +6,15 @@ module Unicoder
   module Downloader
     def self.fetch(identifier,
         unicode_version: CURRENT_UNICODE_VERSION,
+        emoji_version: CURRENT_EMOJI_VERSION,
         destination_directory: LOCAL_DATA_DIRECTORY,
         destination: nil,
         filename: nil
       )
       filename = UNICODE_FILES[identifier.to_sym] || filename
       raise ArgumentError, "No valid file identifier or filename given" if !filename
-      filename.sub! 'VERSION', unicode_version
+      filename.sub! 'UNICODE_VERSION', unicode_version
+      filename.sub! 'EMOJI_VERSION', emoji_version
       source = UNICODE_DATA_ENDPOINT + filename
       destination ||= destination_directory + filename
 

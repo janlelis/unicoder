@@ -6,8 +6,9 @@ module Unicoder
   module Builder
     attr_reader :index
 
-    def initialize(unicode_version = nil)
+    def initialize(unicode_version = nil, emoji_version = nil)
       @unicode_version = unicode_version
+      @emoji_version = emoji_version
       initialize_index
     end
 
@@ -26,7 +27,8 @@ module Unicoder
     def parse_file(identifier, parse_mode, **parse_options)
       filename = UNICODE_FILES[identifier.to_sym] || filename
       raise ArgumentError, "No valid file identifier or filename given" if !filename
-      filename.sub! 'VERSION', @unicode_version
+      filename.sub! 'UNICODE_VERSION', @unicode_version
+      filename.sub! 'UNICODE_VERSION', @emoji_version
       filename.sub! '.zip', ''
       Downloader.fetch(identifier) unless File.exists?(LOCAL_DATA_DIRECTORY + filename)
       file = File.read(LOCAL_DATA_DIRECTORY + filename)
@@ -55,13 +57,16 @@ module Unicoder
         index_file
       end
     end
-    
+
     def self.build(identifier, **options)
       format = options[:format] || :marshal
       require_relative "builders/#{identifier}"
       # require "unicoder/builders/#{identifier}"
       builder_class = self.const_get(identifier.to_s.gsub(/(?:^|_)([a-z])/){ $1.upcase })
-      builder = builder_class.new(options[:unicode_version] || CURRENT_UNICODE_VERSION)
+      builder = builder_class.new(
+        (options[:unicode_version] || CURRENT_UNICODE_VERSION),
+        (options[:emoji_version]   || CURRENT_EMOJI_VERSION),
+      )
       puts "Building index for #{identifier}…"
       builder.parse!
       index_file = builder.export(options)
