@@ -15,8 +15,13 @@ module Unicoder
       raise ArgumentError, "No valid file identifier or filename given" if !filename
       filename.sub! 'UNICODE_VERSION', unicode_version
       filename.sub! 'EMOJI_VERSION', emoji_version
-      source = UNICODE_DATA_ENDPOINT + filename
-      destination ||= destination_directory + filename
+      if filename =~ /\A(https?|ftp):\/\//
+        source = filename
+        destination ||= destination_directory + filename.sub(/\A(https?|ftp):\//, "")
+      else
+        source = UNICODE_DATA_ENDPOINT + filename
+        destination ||= destination_directory + filename
+      end
 
       puts "GET #{source} => #{destination}"
 

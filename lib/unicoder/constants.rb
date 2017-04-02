@@ -19,6 +19,8 @@ module Unicoder
     2.0
   ].freeze
 
+  IVD_VERSION = "2016-08-15".freeze
+
   UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public".freeze
 
   LOCAL_DATA_DIRECTORY = File.expand_path(File.dirname(__FILE__) + "/../../data/unicode").freeze
@@ -35,6 +37,10 @@ module Unicoder
     general_categories:        "/UNICODE_VERSION/ucd/extracted/DerivedGeneralCategory.txt",
     unihan_numeric_values:     "/UNICODE_VERSION/ucd/Unihan.zip/Unihan_NumericValues.txt",
     jamo:                      "/UNICODE_VERSION/ucd/Jamo.txt",
+    named_sequences:           "/UNICODE_VERSION/ucd/NamedSequences.txt",
+    named_sequences_prov:      "/UNICODE_VERSION/ucd/NamedSequencesProv.txt",
+    standardized_variants:     "/UNICODE_VERSION/ucd/StandardizedVariants.txt",
+    ivd_sequences:             "http://www.unicode.org/ivd/data/#{IVD_VERSION}/IVD_Sequences.txt",
     emoji:                     "/emoji/EMOJI_VERSION/emoji-data.txt",
     emoji_sequences:           "/emoji/EMOJI_VERSION/emoji-sequences.txt",
     emoji_variation_sequences: "/emoji/EMOJI_VERSION/emoji-variation-sequences.txt",
