@@ -33,6 +33,16 @@ module Unicoder
         parse_file :ivd_sequences, :line, regex: /^(?<codepoints>.+?);.*?; (?<name>.+?)$/ do |line|
           assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, line["name"], combine: true
         end
+
+        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*;.*?; (?<name>.+?)\s*#/ do |line|
+          name = line["name"].gsub(/\\x{(\h+)}/){ [$1.to_i(16)].pack("U") }.upcase
+          assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, name
+        end
+
+        parse_file :emoji_zwj_sequences, :line, regex: /^(?<codepoints>.+?)\s*;.*?; (?<name>.+?)\s*#/ do |line|
+          name = line["name"].gsub(/\\x{(\h+)}/){ [$1.to_i(16)].pack("U") }.upcase
+          assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, name
+        end
       end
     end
   end
