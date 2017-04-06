@@ -4,8 +4,12 @@ module Unicoder
       include Builder
 
       def assign_codepoint(codepoint, value, index = @index, combine: false)
-        if index.has_key?(codepoint) && combine
-          index[codepoint] << " / #{value}"
+        if index.has_key?(codepoint)
+          if combine
+            index[codepoint] << " / #{value}"
+          else
+            # ignore new one
+          end
         else
           index[codepoint] = value
         end
@@ -32,6 +36,11 @@ module Unicoder
 
         parse_file :ivd_sequences, :line, regex: /^(?<codepoints>.+?);.*?; (?<name>.+?)$/ do |line|
           assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, line["name"], combine: true
+        end
+
+        parse_file :emoji_variation_sequences, :line, regex: /^(?<codepoints>.+?)\s*;\s*(?<variant>.+?)\s*;\s*# \(.*\)\s*(?<name>.+?)\s*$/ do |line|
+          name = "#{line["name"].strip} (#{line["variant"]})"
+          assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, name
         end
 
         parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*;.*?; (?<name>.+?)\s*#/ do |line|
