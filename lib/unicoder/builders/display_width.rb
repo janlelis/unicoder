@@ -6,7 +6,12 @@ module Unicoder
 
       IGNORE_CATEGORIES     = %w[Cs Co Cn].freeze
       ZERO_WIDTH_CATEGORIES = %w[Mn Me Cf].freeze
-      ZERO_WIDTH_CODEPOINTS = [*0x1160..0x11FF].freeze
+      ZERO_WIDTH_CODEPOINTS = [
+        *0x1160..0x11FF,
+        *0x2060..0x206F,
+        *0xFFF0..0xFFF8,
+        *0xE0000..0xE0FFF,
+        ].freeze
       SPECIAL_WIDTHS = {
         0x0    =>  0, # \0 NULL
         0x5    =>  0, #    ENQUIRY
