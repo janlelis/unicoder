@@ -17,6 +17,7 @@ module Unicoder
           TAGS: [],
           KEYCAPS: [],
           ZWJ: [],
+          SD: [],
         }
       end
 
@@ -58,6 +59,13 @@ module Unicoder
           @index[:ZWJ] << codepoints.map{|e| e.to_i(16)}
         end
 
+        parse_file :valid_subdivisions, :xml do |xml|
+          subdivisions = []
+          xml.css('[idStatus="regular"], [idStatus="deprecated"]').each{ |id|
+            subdivisions += id.text.split
+          }
+          @index[:SD] = subdivisions.uniq
+        end
       end
     end
   end

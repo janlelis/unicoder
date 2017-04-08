@@ -45,6 +45,7 @@ module Unicoder
     emoji_sequences:           "/emoji/EMOJI_VERSION/emoji-sequences.txt",
     emoji_variation_sequences: "/emoji/EMOJI_VERSION/emoji-variation-sequences.txt",
     emoji_zwj_sequences:       "/emoji/EMOJI_VERSION/emoji-zwj-sequences.txt",
+    valid_subdivisions:        "http://www.unicode.org/repos/cldr/tags/latest/common/validity/subdivision.xml",
   }
 end
 
