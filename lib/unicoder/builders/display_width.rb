@@ -6,12 +6,14 @@ module Unicoder
 
       IGNORE_CATEGORIES     = %w[Cs Co Cn].freeze
       ZERO_WIDTH_CATEGORIES = %w[Mn Me Cf].freeze
-      ZERO_WIDTH_CODEPOINTS = [
+
+      ZERO_WIDTH_RANGES = [
         *0x1160..0x11FF,
         *0x2060..0x206F,
         *0xFFF0..0xFFF8,
         *0xE0000..0xE0FFF,
-        ].freeze
+      ].freeze
+
       SPECIAL_WIDTHS = {
         0x0    =>  0, # \0 NULL
         0x5    =>  0, #    ENQUIRY
@@ -53,15 +55,16 @@ module Unicoder
           assign_codepoint codepoint, value
         }
 
-        4.times{ compress! }
+        ZERO_WIDTH_RANGES.each{ |codepoint|
+          assign_codepoint codepoint, 0
+        }
 
-        p @index
+        4.times{ compress! }
       end
 
       def determine_width(codepoint, category, east_asian_width)
         if  ( ZERO_WIDTH_CATEGORIES.include?(category) &&
-              [codepoint].pack('U') !~ /\p{Cf}(?<=\p{Arabic})/ ) ||
-            ZERO_WIDTH_CODEPOINTS.include?(codepoint)
+              [codepoint].pack('U') !~ /\p{Cf}(?<=\p{Arabic})/ )
           0
         elsif east_asian_width == "F" || east_asian_width == "W"
           2
