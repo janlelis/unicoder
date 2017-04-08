@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = "~> 2.0"
   gem.add_dependency "rationalist", "~> 2.0"
   gem.add_dependency "rubyzip", "~> 1.2"
+  gem.add_dependency "oga", "~> 2.9"
 end

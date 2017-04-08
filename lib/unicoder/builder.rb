@@ -27,8 +27,9 @@ module Unicoder
     def parse_file(identifier, parse_mode, **parse_options)
       filename = UNICODE_FILES[identifier.to_sym] || filename
       raise ArgumentError, "No valid file identifier or filename given" if !filename
+      filename = filename.dup
       filename.sub! 'UNICODE_VERSION', @unicode_version
-      filename.sub! 'UNICODE_VERSION', @emoji_version
+      filename.sub! 'EMOJI_VERSION', @emoji_version
       filename.sub! '.zip', ''
       filename.sub! /\A(https?|ftp):\//, ""
       Downloader.fetch(identifier) unless File.exists?(LOCAL_DATA_DIRECTORY + filename)
@@ -38,6 +39,11 @@ module Unicoder
         file.each_line{ |line|
           yield Hash[ $~.names.zip( $~.captures ) ] if line =~ parse_options[:regex]
         }
+      elsif parse_mode == :xml
+        require "oga"
+        yield Oga.parse_xml(file)
+      else
+        yield file
       end
     end
 

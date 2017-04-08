@@ -13,6 +13,7 @@ module Unicoder
       )
       filename = UNICODE_FILES[identifier.to_sym] || filename
       raise ArgumentError, "No valid file identifier or filename given" if !filename
+      filename = filename.dup
       filename.sub! 'UNICODE_VERSION', unicode_version
       filename.sub! 'EMOJI_VERSION', emoji_version
       if filename =~ /\A(https?|ftp):\/\//
