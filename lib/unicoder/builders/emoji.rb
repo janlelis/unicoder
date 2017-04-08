@@ -3,10 +3,20 @@ module Unicoder
     class Emoji
       include Builder
 
+      REVERSE_PROPERTY_NAMES = {
+        "Emoji_Modifier_Base" => :B,
+        "Emoji_Modifier" => :M,
+        "Emoji_Component" => :C,
+        "Emoji_Presentation" => :P,
+      }
+
       def initialize_index
         @index = {
           PROPERTIES: {},
-          SEQUENCES: {},
+          FLAGS: [],
+          TAGS: [],
+          KEYCAPS: [],
+          ZWJ: [],
         }
       end
 
@@ -24,29 +34,41 @@ module Unicoder
             if line["property"] == "Emoji"
               @index[:PROPERTIES][codepoint] = []
             else
-              @index[:PROPERTIES][codepoint] << line["property"].sub(/^Emoji_/, "")
+              @index[:PROPERTIES][codepoint] << REVERSE_PROPERTY_NAMES[line["property"]] || line["property"]
             end
           }
         end
 
-        [
-          :emoji_sequences,
-          # :emoji_variation_sequences,
-          :emoji_zwj_sequences,
-        ].each{ |file|
-          parse_file file, :line, regex: /^(?<codepoints>.+?)\s*;/ do |line|
-            codepoints = line["codepoints"].split
-            # @index[:SEQUENCES] << codepoints.map{|e| e.to_i(16 )}
-            current_index_level = @index[:SEQUENCES]
-            codepoints.each{ |cp|
-              ord = cp.to_i(16)
-              current_index_level[ord] ||= {}
-              current_index_level = current_index_level[ord]
-            }
-            current_index_level[true] = true # end mark
-          end
-        }
+        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*; Emoji_Flag_Sequence/ do |line|
+          codepoints = line["codepoints"].split
+          @index[:FLAGS] << codepoints.map{|e| e.to_i(16)}
+        end
+
+        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*; Emoji_Tag_Sequence/ do |line|
+          codepoints = line["codepoints"].split
+          @index[:TAGS] << codepoints.map{|e| e.to_i(16)}
+        end
+
+        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*; Emoji_Keycap_Sequence/ do |line|
+          @index[:KEYCAPS] << line["codepoints"].split[0].to_i(16)
+        end
+
+        parse_file :emoji_zwj_sequences, :line, regex: /^(?!#)(?<codepoints>.+?)\s*;/ do |line|
+          codepoints = line["codepoints"].split
+          @index[:ZWJ] << codepoints.map{|e| e.to_i(16)}
+        end
+
       end
     end
   end
 end
+
+=begin alternative
+current_index_level = @index[:SEQUENCES]
+codepoints.each{ |cp|
+  ord = cp.to_i(16)
+  current_index_level[ord] ||= {}
+  current_index_level = current_index_level[ord]
+}
+current_index_level[true] = true # end mark
+=end
