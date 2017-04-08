@@ -14,6 +14,14 @@ module Unicoder
         *0xE0000..0xE0FFF,
       ].freeze
 
+      WIDE_RANGES = [
+        *0x3400..0x4DBF,
+        *0x4E00..0x9FFF,
+        *0xF900..0xFAFF,
+        *0x20000..0x2FFFD,
+        *0x30000..0x3FFFD,
+      ].freeze
+
       SPECIAL_WIDTHS = {
         0x0    =>  0, # \0 NULL
         0x5    =>  0, #    ENQUIRY
@@ -51,12 +59,16 @@ module Unicoder
           }
         end
 
-        SPECIAL_WIDTHS.each{ |codepoint, value|
-          assign_codepoint codepoint, value
-        }
-
         ZERO_WIDTH_RANGES.each{ |codepoint|
           assign_codepoint codepoint, 0
+        }
+
+        WIDE_RANGES.each{ |codepoint|
+          assign_codepoint codepoint, 2
+        }
+
+        SPECIAL_WIDTHS.each{ |codepoint, value|
+          assign_codepoint codepoint, value
         }
 
         4.times{ compress! }
