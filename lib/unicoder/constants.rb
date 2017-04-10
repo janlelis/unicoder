@@ -41,10 +41,11 @@ module Unicoder
     named_sequences_prov:      "/UNICODE_VERSION/ucd/NamedSequencesProv.txt",
     standardized_variants:     "/UNICODE_VERSION/ucd/StandardizedVariants.txt",
     ivd_sequences:             "http://www.unicode.org/ivd/data/#{IVD_VERSION}/IVD_Sequences.txt",
-    emoji:                     "/emoji/EMOJI_VERSION/emoji-data.txt",
+    emoji_data:                "/emoji/EMOJI_VERSION/emoji-data.txt",
     emoji_sequences:           "/emoji/EMOJI_VERSION/emoji-sequences.txt",
     emoji_variation_sequences: "/emoji/EMOJI_VERSION/emoji-variation-sequences.txt",
     emoji_zwj_sequences:       "/emoji/EMOJI_VERSION/emoji-zwj-sequences.txt",
+    emoji_test:                "/emoji/EMOJI_VERSION/emoji-test.txt",
     valid_subdivisions:        "http://www.unicode.org/repos/cldr/tags/latest/common/validity/subdivision.xml",
   }
 end
