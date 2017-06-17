@@ -2,6 +2,7 @@
 
 WIP
 
+(a utility which lets you turn Unicode data into bundles for programming libraries)
 
 ## Usage
 
@@ -19,6 +20,7 @@ Index Name    | Gem
 blocks        | [unicode-blocks](https://github.com/janlelis/unicode-blocks)
 categories    | [unicode-categories](https://github.com/janlelis/unicode-categories)
 confusable    | [unicode-confusable](https://github.com/janlelis/unicode-confusable)
+emoji         | [unicode-emoji](https://github.com/janlelis/unicode-emoji)
 display\_width| [unicode-display_width](https://github.com/janlelis/unicode-display_width)
 name          | [unicode-name](https://github.com/janlelis/unicode-name)
 numeric\_value| [unicode-numeric_value](https://github.com/janlelis/unicode-numeric_value)
@@ -27,4 +29,4 @@ types         | [unicode-types](https://github.com/janlelis/unicode-types)
 
 ## MIT License
 
-Copyright (C) 2016 Jan Lelis <http://janlelis.com>. Released under the MIT license.
+Copyright (C) 2016-2017 Jan Lelis <http://janlelis.com>. Released under the MIT license.
