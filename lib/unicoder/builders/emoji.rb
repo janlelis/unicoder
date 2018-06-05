@@ -4,10 +4,12 @@ module Unicoder
       include Builder
 
       REVERSE_PROPERTY_NAMES = {
+        "Emoji" => :E,
         "Emoji_Modifier_Base" => :B,
         "Emoji_Modifier" => :M,
         "Emoji_Component" => :C,
         "Emoji_Presentation" => :P,
+        "Extended_Pictographic" => :X,
       }
 
       def initialize_index
@@ -33,11 +35,8 @@ module Unicoder
           end
 
           codepoints.each{ |codepoint|
-            if line["property"] == "Emoji"
-              @index[:PROPERTIES][codepoint] = []
-            else
-              @index[:PROPERTIES][codepoint] << REVERSE_PROPERTY_NAMES[line["property"]] || line["property"]
-            end
+            @index[:PROPERTIES][codepoint] ||= []
+            @index[:PROPERTIES][codepoint] << (REVERSE_PROPERTY_NAMES[line["property"]] || line["property"])
           }
         end
 
