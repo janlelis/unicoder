@@ -1,4 +1,5 @@
 require "json"
+require "rubygems/util"
 
 module Unicoder
   # A builder defines a parse function which translates one (ore more) unicode data
@@ -59,7 +60,7 @@ module Unicoder
 
       # if false# || options[:gzip]
       if options[:gzip]
-        Gem.gzip(index_file)
+        Gem::Util.gzip(index_file)
       else
         index_file
       end
