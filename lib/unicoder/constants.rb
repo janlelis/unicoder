@@ -50,7 +50,7 @@ module Unicoder
     emoji_variation_sequences: "/emoji/EMOJI_VERSION/emoji-variation-sequences.txt",
     emoji_zwj_sequences:       "/emoji/EMOJI_VERSION/emoji-zwj-sequences.txt",
     emoji_test:                "/emoji/EMOJI_VERSION/emoji-test.txt",
-    valid_subdivisions:        "http://www.unicode.org/repos/cldr/tags/latest/common/validity/subdivision.xml",
+    valid_subdivisions:        "http://www.unicode.org/repos/cldr/tags/latest/common/validity/subdivision.xml", # TODO use explicit version
   }
 end
 
