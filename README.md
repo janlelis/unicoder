@@ -1,4 +1,4 @@
-# unicoder [![[version]](https://badge.fury.io/rb/unicoder.svg)](http://badge.fury.io/rb/unicoder)
+# unicoder [![[version]](https://badge.fury.io/rb/unicoder.svg)](https://badge.fury.io/rb/unicoder)
 
 WIP
 
@@ -30,4 +30,4 @@ types         | [unicode-types](https://github.com/janlelis/unicode-types)
 
 ## MIT License
 
-Copyright (C) 2016-2017 Jan Lelis <http://janlelis.com>. Released under the MIT license.
+Copyright (C) 2016-2019 Jan Lelis <http://janlelis.com>. Released under the MIT license.
