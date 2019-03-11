@@ -25,7 +25,7 @@ module Unicoder
       end
 
       def parse!
-        parse_file :emoji_data, :line, regex: /^(?<codepoints>\S+?) +; (?<property>\S+) +#/ do |line|
+        parse_file :emoji_data, :line, regex: /^(?<codepoints>\S+?) +; (?<property>\S+) *#/ do |line|
           if line["codepoints"]['..']
             codepoints = Range.new(*line["codepoints"].split('..').map{ |codepoint|
               codepoint.to_i(16)
