@@ -26,6 +26,8 @@ module Unicoder
 
   IVD_VERSION = "2017-12-12".freeze
 
+  CLDR_VERSION = "35".freeze
+
   UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public".freeze
 
   LOCAL_DATA_DIRECTORY = File.expand_path(File.dirname(__FILE__) + "/../../data/unicode").freeze
@@ -51,7 +53,8 @@ module Unicoder
     emoji_variation_sequences: "/emoji/EMOJI_VERSION/emoji-variation-sequences.txt",
     emoji_zwj_sequences:       "/emoji/EMOJI_VERSION/emoji-zwj-sequences.txt",
     emoji_test:                "/emoji/EMOJI_VERSION/emoji-test.txt",
-    valid_subdivisions:        "http://www.unicode.org/repos/cldr/tags/latest/common/validity/subdivision.xml", # TODO use explicit version
+    valid_subdivisions:        "https://www.unicode.org/repos/cldr/tags/release-#{CLDR_VERSION}/common/validity/subdivision.xml",
+    # ""
   }
 end
 
