@@ -1,7 +1,7 @@
 module Unicoder
   VERSION = "0.1.0".freeze
 
-  CURRENT_UNICODE_VERSION = "12.0.0".freeze
+  CURRENT_UNICODE_VERSION = "12.1.0".freeze
 
   CURRENT_EMOJI_VERSION = "12.0".freeze
 
@@ -13,6 +13,7 @@ module Unicoder
     10.0.0
     11.0.0
     12.0.0
+    12.1.0
   ].freeze
 
   EMOJI_VERSIONS = %[
