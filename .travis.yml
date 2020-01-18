@@ -1,20 +1,20 @@
 sudo: false
 language: ruby
 
-script: bundle exec ruby spec/unicoder_spec.rb
-
 rvm:
-- 2.3.0
-- 2.2
-- 2.1
-- 2.0
+- 2.7
+- 2.6
+- 2.5
+- 2.4
+- 2.3
 - ruby-head
-- rbx-2
-- jruby-head
-- jruby-9000
+- jruby-9.2.9.0
+- truffleruby
 
-cache:
-- bundler
-
-# matrix:
+matrix:
+  allow_failures:
+    - rvm: 2.3
+    - rvm: ruby-head
+    - rvm: jruby-2.9.2.0
+    - rvm: truffleruby
 #   fast_finish: true
