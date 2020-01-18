@@ -30,4 +30,4 @@ types         | [unicode-types](https://github.com/janlelis/unicode-types)
 
 ## MIT License
 
-Copyright (C) 2016-2019 Jan Lelis <http://janlelis.com>. Released under the MIT license.
+Copyright (C) 2016-2020 Jan Lelis <https://janlelis.com>. Released under the MIT license.
