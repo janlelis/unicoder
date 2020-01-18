@@ -5,10 +5,10 @@ require File.dirname(__FILE__) + "/lib/unicoder/constants"
 Gem::Specification.new do |gem|
   gem.name          = "unicoder"
   gem.version       = Unicoder::VERSION
-  gem.summary       = "Create specialized indexes for Unicode data lookup"
-  gem.description   = "Generate specialized indexes for Unicode data lookup"
+  gem.summary       = "Creates specialized indexes for Unicode data lookup"
+  gem.description   = "Generates specialized indexes for Unicode data lookup"
   gem.authors       = ["Jan Lelis"]
-  gem.email         = ["mail@janlelis.de"]
+  gem.email         = ["hi@ruby.consulting"]
   gem.homepage      = "https://github.com/janlelis/unicoder"
   gem.license       = "MIT"
 
