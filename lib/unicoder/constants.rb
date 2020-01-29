@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Unicoder
-  VERSION = "0.1.0".freeze
+  VERSION = "0.1.0"
 
-  CURRENT_UNICODE_VERSION = "12.1.0".freeze
+  CURRENT_UNICODE_VERSION = "12.1.0"
 
-  CURRENT_EMOJI_VERSION = "12.1".freeze
+  CURRENT_EMOJI_VERSION = "13.0"
 
   UNICODE_VERSIONS = %w[
      6.3.0
@@ -17,6 +19,7 @@ module Unicoder
   ].freeze
 
   EMOJI_VERSIONS = %[
+   13.0
    12.1
    12.0
    11.0
@@ -26,11 +29,11 @@ module Unicoder
     2.0
   ].freeze
 
-  IVD_VERSION = "2017-12-12".freeze
+  IVD_VERSION = "2017-12-12"
 
-  CLDR_VERSION = "36".freeze
+  CLDR_VERSION = "36"
 
-  UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public".freeze
+  UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public"
 
   LOCAL_DATA_DIRECTORY = File.expand_path(File.dirname(__FILE__) + "/../../data/unicode").freeze
 
