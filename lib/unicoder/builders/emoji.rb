@@ -40,12 +40,12 @@ module Unicoder
           }
         end
 
-        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*; Emoji_Flag_Sequence/ do |line|
+        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*; RGI_Emoji_Flag_Sequence/ do |line|
           codepoints = line["codepoints"].split
           @index[:FLAGS] << codepoints.map{|e| e.to_i(16)}
         end
 
-        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*; Emoji_Tag_Sequence/ do |line|
+        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*; RGI_Emoji_Tag_Sequence/ do |line|
           codepoints = line["codepoints"].split
           @index[:TAGS] << codepoints.map{|e| e.to_i(16)}
         end
