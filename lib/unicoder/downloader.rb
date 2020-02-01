@@ -44,7 +44,7 @@ module Unicoder
       if File.exists?(destination)
         puts "Skipping download of #{source} (already exists)"
       else
-        open(source){ |f|
+        URI.open(source){ |f|
           FileUtils.mkdir_p(File.dirname(destination))
           File.write(destination, f.read)
         }
