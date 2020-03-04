@@ -3,22 +3,21 @@
 module Unicoder
   VERSION = "0.1.0"
 
-  CURRENT_UNICODE_VERSION = "12.1.0"
-
-  CURRENT_EMOJI_VERSION = "13.0"
-
   UNICODE_VERSIONS = %w[
-     6.3.0
-     7.0.0
-     8.0.0
-     9.0.0
-    10.0.0
-    11.0.0
-    12.0.0
+    13.0.0
     12.1.0
+    12.0.0
+    11.0.0
+    10.0.0
+     9.0.0
+     8.0.0
+     7.0.0
+     6.3.0
   ].freeze
 
-  EMOJI_VERSIONS = %[
+  CURRENT_UNICODE_VERSION = UNICODE_VERSIONS.first
+
+  EMOJI_VERSIONS = %w[
    13.0
    12.1
    12.0
@@ -28,6 +27,8 @@ module Unicoder
     3.0
     2.0
   ].freeze
+
+  CURRENT_EMOJI_VERSION = EMOJI_VERSIONS.first
 
   IVD_VERSION = "2017-12-12"
 
