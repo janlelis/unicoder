@@ -32,7 +32,7 @@ module Unicoder
 
   IVD_VERSION = "2017-12-12"
 
-  CLDR_VERSION = "36"
+  CLDR_VERSION = "37"
 
   UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public"
 
