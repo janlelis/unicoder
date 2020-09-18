@@ -18,6 +18,7 @@ module Unicoder
   CURRENT_UNICODE_VERSION = UNICODE_VERSIONS.first
 
   EMOJI_VERSIONS = %w[
+   13.1
    13.0
    12.1
    12.0
@@ -27,6 +28,18 @@ module Unicoder
     3.0
     2.0
   ].freeze
+
+  EMOJI_RELATED_UNICODE_VERSIONS = {
+   "13.1" => "13.0.0",
+   "13.0" => "13.0.0",
+   "12.1" => "12.1.0",
+   "12.0" => "12.0.0",
+   "11.0" => "11.0.0",
+    "5.0" => "10.0.0",
+    "4.0" => "9.0.0",
+    "3.0" => "9.0.0",
+    "2.0" => "8.0.0",
+  }.freeze
 
   CURRENT_EMOJI_VERSION = EMOJI_VERSIONS.first
 
@@ -55,10 +68,10 @@ module Unicoder
     standardized_variants:     "/UNICODE_VERSION/ucd/StandardizedVariants.txt",
     ivd_sequences:             "https://www.unicode.org/ivd/data/#{IVD_VERSION}/IVD_Sequences.txt",
     # emoji_data:                "/EMOJI_VERSION/ucd/emoji/",
-    emoji_data:                "/EMOJI_VERSION.0/ucd/emoji/emoji-data.txt",
+    emoji_data:                "/EMOJI_RELATED_VERSION/ucd/emoji/emoji-data.txt",
     emoji_sequences:           "/emoji/EMOJI_VERSION/emoji-sequences.txt",
     # emoji_variation_sequences: "/emoji/EMOJI_VERSION/emoji-variation-sequences.txt",
-    emoji_variation_sequences: "/EMOJI_VERSION.0/ucd/emoji/emoji-variation-sequences.txt",
+    emoji_variation_sequences: "/EMOJI_RELATED_VERSION/ucd/emoji/emoji-variation-sequences.txt",
     emoji_zwj_sequences:       "/emoji/EMOJI_VERSION/emoji-zwj-sequences.txt",
     emoji_test:                "/emoji/EMOJI_VERSION/emoji-test.txt",
     # valid_subdivisions:        "https://www.unicode.org/repos/cldr/tags/release-#{CLDR_VERSION}/common/validity/subdivision.xml",

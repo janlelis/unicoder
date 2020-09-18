@@ -16,6 +16,7 @@ module Unicoder
       filename = filename.dup
       filename.sub! 'UNICODE_VERSION', unicode_version
       filename.sub! 'EMOJI_VERSION', emoji_version
+      filename.sub! 'EMOJI_RELATED_VERSION', EMOJI_RELATED_UNICODE_VERSIONS[emoji_version]
       if filename =~ /\A(https?|ftp):\/\//
         source = filename
         destination ||= destination_directory + filename.sub(/\A(https?|ftp):\//, "")

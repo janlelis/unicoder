@@ -31,6 +31,7 @@ module Unicoder
       filename = filename.dup
       filename.sub! 'UNICODE_VERSION', @unicode_version
       filename.sub! 'EMOJI_VERSION', @emoji_version
+      filename.sub! 'EMOJI_RELATED_VERSION', EMOJI_RELATED_UNICODE_VERSIONS[@emoji_version]
       filename.sub! '.zip', ''
       filename.sub! /\A(https?|ftp):\//, ""
       Downloader.fetch(identifier) unless File.exists?(LOCAL_DATA_DIRECTORY + filename)
