@@ -48,7 +48,7 @@ module Unicoder
 
   IVD_VERSION = "2020-11-06"
 
-  CLDR_VERSION = "40"
+  CLDR_VERSION = "41"
 
   UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public"
 
