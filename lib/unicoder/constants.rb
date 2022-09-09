@@ -4,6 +4,7 @@ module Unicoder
   VERSION = "0.1.0"
 
   UNICODE_VERSIONS = %w[
+    15.0.0
     14.0.0
     13.0.0
     12.1.0
@@ -19,6 +20,7 @@ module Unicoder
   CURRENT_UNICODE_VERSION = UNICODE_VERSIONS.first
 
   EMOJI_VERSIONS = %w[
+   15.0
    14.0
    13.1
    13.0
@@ -32,6 +34,7 @@ module Unicoder
   ].freeze
 
   EMOJI_RELATED_UNICODE_VERSIONS = {
+   "15.0" => "15.0.0",
    "14.0" => "14.0.0",
    "13.1" => "13.0.0",
    "13.0" => "13.0.0",
