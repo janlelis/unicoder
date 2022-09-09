@@ -8,10 +8,11 @@ module Unicoder
       ZERO_WIDTH_CATEGORIES = %w[Mn Me Cf].freeze
 
       ZERO_WIDTH_RANGES = [
-        *0x1160..0x11FF,
-        *0x2060..0x206F,
-        *0xFFF0..0xFFF8,
-        *0xE0000..0xE0FFF,
+        *0x1160..0x11FF, # HANGUL JUNGSEONG
+        *0xD7B0..0xD7FF, # HANGUL JUNGSEONG
+        *0x2060..0x206F, # Ignorables
+        *0xFFF0..0xFFF8, # Ignorables
+        *0xE0000..0xE0FFF, # Ignorables
       ].freeze
 
       WIDE_RANGES = [
