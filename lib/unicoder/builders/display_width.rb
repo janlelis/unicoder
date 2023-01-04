@@ -34,7 +34,7 @@ module Unicoder
         0xD    =>  0, # \r CARRIAGE RETURN
         0xE    =>  0, #    SHIFT OUT
         0xF    =>  0, #    SHIFT IN
-        0x00AD =>  1, #    SOFT HYPHEN
+        0x00AD =>  nil, #    SOFT HYPHEN
         0x2E3A =>  2, #    TWO-EM DASH
         0x2E3B =>  3, #    THREE-EM DASH
       }.freeze
