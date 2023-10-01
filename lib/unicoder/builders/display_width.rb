@@ -44,7 +44,7 @@ module Unicoder
       end
 
       def parse!
-        parse_file :east_asian_width, :line, regex: /^(?<codepoints>\S+?);(?<width>\S+)\s+#\s(?<category>\S+).*$/ do |line|
+        parse_file :east_asian_width, :line, regex: /^(?<codepoints>\S+?)\s*;\s*(?<width>\S+)\s+#\s(?<category>\S+).*$/ do |line|
           next if IGNORE_CATEGORIES.include?(line["category"])
 
           if line["codepoints"]['..']
