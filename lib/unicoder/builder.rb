@@ -34,7 +34,7 @@ module Unicoder
       filename.sub! 'EMOJI_RELATED_VERSION', EMOJI_RELATED_UNICODE_VERSIONS[@emoji_version]
       filename.sub! '.zip', ''
       filename.sub! /\A(https?|ftp):\//, ""
-      Downloader.fetch(identifier) unless File.exists?(LOCAL_DATA_DIRECTORY + filename)
+      Downloader.fetch(identifier) unless File.exist?(LOCAL_DATA_DIRECTORY + filename)
       file = File.read(LOCAL_DATA_DIRECTORY + filename)
 
       if parse_mode == :line

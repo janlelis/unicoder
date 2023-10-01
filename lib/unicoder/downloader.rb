@@ -42,7 +42,7 @@ module Unicoder
         zip = false
       end
 
-      if File.exists?(destination)
+      if File.exist?(destination)
         puts "Skipping download of #{source} (already exists)"
       else
         URI.open(source){ |f|
