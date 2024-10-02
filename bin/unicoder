@@ -6,7 +6,7 @@ require "rationalist"
 args = Rationalist.parse
 command = args[:_][0]
 identifier = args[:_][1]
-KNOWN_OPTIONS = [:version, :help, :verbose, :format, :gzip]
+KNOWN_OPTIONS = [:version, :help, :verbose, :format, :gzip, :option, :meta]
 options = args.select { |option,| KNOWN_OPTIONS.include? option }
 
 if options.has_key?(:version)

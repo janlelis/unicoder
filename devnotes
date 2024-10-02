@@ -1,0 +1,1 @@
+bin/unicoder build numeric_value --meta --format esm --option charkeys+stringfractions

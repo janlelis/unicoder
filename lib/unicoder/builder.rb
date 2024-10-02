@@ -5,11 +5,37 @@ module Unicoder
   # A builder defines a parse function which translates one (ore more) unicode data
   # files into an index hash
   module Builder
-    attr_reader :index
+    attr_reader :index, :formats, :option
+    attr_writer :option
+
+    def formats
+      {
+        marshal: {
+          ext: ".marshal",
+        },
+        json: {
+          ext: ".json",
+        },
+        esm: {
+          ext: ".mjs"
+        }
+      }
+    end
+
+    def meta
+      {
+        "META" => {
+          "generator" => "unicoder",
+          "unicodeVersion" => @unicode_version,
+        },
+        "INDEX" => "_PLACEHOLDER_"
+      }
+    end
 
     def initialize(unicode_version = nil, emoji_version = nil)
-      @unicode_version = unicode_version
-      @emoji_version = emoji_version
+      @unicode_version = unicode_version || CURRENT_UNICODE_VERSION
+      @emoji_version = emoji_version || CURRENT_EMOJI_VERSION
+      @option = ""
       initialize_index
     end
 
@@ -57,9 +83,19 @@ module Unicoder
         index_file = Marshal.dump(index)
       when :json
         index_file = JSON.dump(index)
+      when :esm
+        formatted_index = <<~JS
+          {#{index.map{|k,v|%%"#{k}":#{v}%}*','}}
+        JS
+
+        if options[:meta]
+          formatted_meta = JSON.dump(meta)
+          formatted_index = formatted_meta.sub('"_PLACEHOLDER_"', formatted_index)
+        end
+
+        index_file = "export default " + formatted_index
       end
 
-      # if false# || options[:gzip]
       if options[:gzip]
         Gem::Util.gzip(index_file)
       else
@@ -73,15 +109,18 @@ module Unicoder
       # require "unicoder/builders/#{identifier}"
       builder_class = self.const_get(identifier.to_s.gsub(/(?:^|_)([a-z])/){ $1.upcase })
       builder = builder_class.new(
-        (options[:unicode_version] || CURRENT_UNICODE_VERSION),
-        (options[:emoji_version]   || CURRENT_EMOJI_VERSION),
+        options[:unicode_version],
+        options[:emoji_version],
       )
       puts "Building index for #{identifier}…"
+      if options[:option]
+        builder.option = options[:option]
+      end
       builder.parse!
-      index_file = builder.export(options)
+      index_file = builder.export(**options)
 
       destination ||= options[:destination] || identifier.to_s
-      destination += ".#{format}"
+      destination += "#{builder.formats.dig(format.to_sym, :ext)}"
       destination += ".gz" if options[:gzip]
       bytes = File.write destination, index_file
 

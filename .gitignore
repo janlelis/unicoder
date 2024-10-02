@@ -4,4 +4,6 @@ Gemfile.lock
 /data*
 *.marshal
 *.marshal.gz
+*.json
+*.mjs
 /old-data
