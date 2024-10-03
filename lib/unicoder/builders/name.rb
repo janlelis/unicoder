@@ -18,13 +18,19 @@ module Unicoder
           JAMO: {
             INITIAL: [],
             MEDIAL: [],
-            FINAL: [nil],
+            FINAL: [""],
           },
         }
         @range_start = nil
       end
 
       def parse!
+        if option =~ /charkeys/
+          get_key = ->(codepoint){ [codepoint].pack("U*") }
+        else
+          get_key = -> (codepoint){ codepoint }
+        end
+
         parse_file :unicode_data, :line, regex: /^(?<codepoint>.+?);(?<name>.+?);.*$/ do |line|
           if line["name"][0] == "<" && line["name"][-1] == ">"
             if line["name"] =~ /First/
@@ -42,14 +48,14 @@ module Unicoder
               raise ArgumentError, "inconsistent range found in data, don't know what to do"
             end
           else
-            assign_codepoint line["codepoint"].to_i(16), line["name"], @index[:NAMES]
+            assign :NAMES, line["codepoint"].to_i(16), line["name"]
           end
         end
 
         parse_file :name_aliases, :line, regex: /^(?<codepoint>.+?);(?<alias>.+?);(?<type>.*)$/ do |line|
-          @index[:ALIASES][line["codepoint"].to_i(16)] ||= {}
-          @index[:ALIASES][line["codepoint"].to_i(16)][line["type"].to_sym] ||= []
-          @index[:ALIASES][line["codepoint"].to_i(16)][line["type"].to_sym] << line["alias"]
+          @index[:ALIASES][get_key[line["codepoint"].to_i(16)]] ||= {}
+          @index[:ALIASES][get_key[line["codepoint"].to_i(16)]][line["type"].to_sym] ||= []
+          @index[:ALIASES][get_key[line["codepoint"].to_i(16)]][line["type"].to_sym] << line["alias"]
         end
 
         parse_file :jamo, :line, regex: /^(?<codepoint>.+?); (?<short_name>.*?) +#.*$/ do |line|

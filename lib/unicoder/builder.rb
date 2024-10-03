@@ -15,27 +15,28 @@ module Unicoder
         },
         json: {
           ext: ".json",
+          option: "charkeys+stringfractions"
         },
         esm: {
-          ext: ".mjs"
+          ext: ".mjs",
+          option: "charkeys+stringfractions"
         }
       }
     end
 
     def meta
       {
-        "META" => {
-          "generator" => "unicoder",
-          "unicodeVersion" => @unicode_version,
+        META: {
+          generator: "unicoder v#{Unicoder::VERSION}",
+          unicodeVersion: @unicode_version,
         },
-        "INDEX" => "_PLACEHOLDER_"
       }
     end
 
-    def initialize(unicode_version = nil, emoji_version = nil)
+    def initialize(unicode_version = nil, emoji_version = nil, format = nil)
       @unicode_version = unicode_version || CURRENT_UNICODE_VERSION
       @emoji_version = emoji_version || CURRENT_EMOJI_VERSION
-      @option = ""
+      @option = formats[format.to_sym] ? formats[format.to_sym][:option] || "" : ""
       initialize_index
     end
 
@@ -43,8 +44,16 @@ module Unicoder
       @index = {}
     end
 
-    def assign_codepoint(codepoint, value, index = @index)
-      index[codepoint] = value
+    def assign_codepoint(codepoint, value, idx = @index)
+      if option =~ /charkeys/
+        idx[[codepoint].pack("U*")] = value
+      else
+        idx[codepoint] = value
+      end
+    end
+
+    def assign(sub_index_name, codepoint, value)
+      assign_codepoint(codepoint, value, index[sub_index_name])
     end
 
     def parse!
@@ -78,22 +87,20 @@ module Unicoder
     def export(format: :marshal, **options)
       p index if options[:verbose]
 
+      if options[:meta]
+        idx = meta.merge(index)
+      else
+        idx = index
+      end
+
+
       case format.to_sym
       when :marshal
-        index_file = Marshal.dump(index)
+        index_file = Marshal.dump(idx)
       when :json
-        index_file = JSON.dump(index)
+        index_file = JSON.dump(idx)
       when :esm
-        formatted_index = <<~JS
-          {#{index.map{|k,v|%%"#{k}":#{v}%}*','}}
-        JS
-
-        if options[:meta]
-          formatted_meta = JSON.dump(meta)
-          formatted_index = formatted_meta.sub('"_PLACEHOLDER_"', formatted_index)
-        end
-
-        index_file = "export default " + formatted_index
+        index_file = "export default " + JSON.dump(idx)
       end
 
       if options[:gzip]
@@ -111,6 +118,7 @@ module Unicoder
       builder = builder_class.new(
         options[:unicode_version],
         options[:emoji_version],
+        format
       )
       puts "Building index for #{identifier}…"
       if options[:option]

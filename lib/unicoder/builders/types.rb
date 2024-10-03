@@ -37,6 +37,12 @@ module Unicoder
             Noncharacter
             Reserved
           ],
+          OFFSETS: [
+            0x10000,
+            0x1000,
+            0x100,
+            0x10
+          ],
         }
       end
 
@@ -66,7 +72,7 @@ module Unicoder
               end
             end
             
-            assign_codepoint codepoint, type, @index[:TYPES]
+            assign :TYPES, codepoint, type
           }
         end
 

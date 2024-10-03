@@ -3,15 +3,27 @@ module Unicoder
     class SequenceName
       include Builder
 
-      def assign_codepoint(codepoint, value, index = @index, combine: false)
-        if index.has_key?(codepoint)
+      def initialize_index
+        @index = {
+          SEQUENCES: {},
+        }
+      end
+
+      def assign_codepoint(codepoints, value, idx = @index[:SEQUENCES], combine: false)
+        if option =~ /charkeys/
+          key = codepoints.pack("U*")
+        else
+          key = codepoints
+        end
+
+        if idx.has_key?(codepoints)
           if combine
-            index[codepoint] << " / #{value}"
+            idx[key] << " / #{value}"
           else
             # ignore new one
           end
         else
-          index[codepoint] = value
+          idx[key] = value
         end
       end
 
