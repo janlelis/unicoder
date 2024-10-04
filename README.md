@@ -1,13 +1,18 @@
 # unicoder [![[version]](https://badge.fury.io/rb/unicoder.svg)](https://badge.fury.io/rb/unicoder)
 
-WIP
-
-(a utility which lets you turn Unicode data into bundles for programming libraries)
+unicoder turns Unicode data into bundles for programming libraries.
 
 ## Usage
 
 ```
 $ unicoder build <index_name> [--gzip]
+```
+
+Examples:
+
+```
+$ unicoder build emoji --format marshal --gzip
+$ unicoder build numeric_value --format esm
 ```
 
 
@@ -28,6 +33,13 @@ scripts       | [unicode-scripts](https://github.com/janlelis/unicode-scripts)
 sequence\_name| [unicode-sequence_name](https://github.com/janlelis/unicode-sequence_name)
 types         | [unicode-types](https://github.com/janlelis/unicode-types)
 
+### JavaScript (ESM)
+
+Index Name    | Module
+--------------|----
+numeric\_value| [unicode-numeric_value](https://github.com/janlelis/unicode-number.js)
+name, sequence\_name, type | [unicode-name](https://github.com/janlelis/unicode-name)
+
 ## MIT License
 
-Copyright (C) 2016-2020 Jan Lelis <https://janlelis.com>. Released under the MIT license.
+Copyright (C) 2016-2024 Jan Lelis <https://janlelis.com>. Released under the MIT license.
