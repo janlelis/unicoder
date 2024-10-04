@@ -37,8 +37,8 @@ types         | [unicode-types](https://github.com/janlelis/unicode-types)
 
 Index Name    | Module
 --------------|----
-numeric\_value| [unicode-numeric_value](https://github.com/janlelis/unicode-number.js)
-name, sequence\_name, type | [unicode-name](https://github.com/janlelis/unicode-name)
+name, sequence\_name, type | [unicode-name.js](https://github.com/janlelis/unicode-name.js)
+numeric\_value| [unicode-number.js](https://github.com/janlelis/unicode-number.js)
 
 ## MIT License
 
