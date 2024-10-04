@@ -55,7 +55,8 @@ module Unicoder
           assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, name
         end
 
-        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*;.*?; (?<name>.+?)\s*#/ do |line|
+        parse_file :emoji_sequences, :line, regex: /^(?<codepoints>.+?)\s*;\s*(?<type>.+?)\s*; (?<name>.+?)\s*#/ do |line|
+          next if line["type"] == "Basic_Emoji"
           name = line["name"].gsub(/\\x{(\h+)}/){ [$1.to_i(16)].pack("U") }.upcase
           assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, name
         end
