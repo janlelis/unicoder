@@ -6,6 +6,7 @@ module Unicoder
       def initialize_index
         @index = {
           SEQUENCES: {},
+          SEQUENCES_NOT_QUALIFIED: {},
         }
       end
 
@@ -61,9 +62,24 @@ module Unicoder
           assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, name
         end
 
-        parse_file :emoji_zwj_sequences, :line, regex: /^(?<codepoints>.+?)\s*;.*?; (?<name>.+?)\s*#/ do |line|
+        parse_file :emoji_zwj_sequences, :line, regex: /^(?!#)(?<codepoints>.+?)\s*;.*?; (?<name>.+?)\s*#/ do |line|
           name = line["name"].gsub(/\\x{(\h+)}/){ [$1.to_i(16)].pack("U") }.upcase
-          assign_codepoint line["codepoints"].split.map{|cp| cp.to_i(16) }, name
+          codepoints = line["codepoints"].split.map{|cp| cp.to_i(16) }
+          assign_codepoint codepoints, name
+          if codepoints.include?(0xFE0F)
+            # Build all combinations of VS16 present and missing
+            codepoints.slice_after(0xFE0F).reduce([[]]){|acc,cur|
+              if cur.include? 0xFE0F
+                acc.flat_map{|prev| [prev + (cur - [0xFE0F]), prev + cur] }
+              else
+                acc.map{|prev| prev + cur}
+              end
+            }.
+            select {|sub_codepoints| sub_codepoints != codepoints }.
+            each { |sub_codepoints|
+              assign_codepoint (sub_codepoints), name, @index[:SEQUENCES_NOT_QUALIFIED]
+            }
+          end
         end
       end
     end
