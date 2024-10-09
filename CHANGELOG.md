@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.1.0
+
+- Improve name index size: Support ranges
+- Improve name index size: Replace common words
+
 ### 1.0.0
 
 With the first 1.0 release, unicoder supports 10 indexes:
