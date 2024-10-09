@@ -3,6 +3,7 @@ module Unicoder
     class Name
 
       include Builder
+      include ReplaceCommonWords
 
       JAMO_INITIAL = 4352
       JAMO_MEDIAL = 4449
@@ -11,6 +12,9 @@ module Unicoder
 
       CJK = "CJK UNIFIED IDEOGRAPH-"
       TANGUT = "TANGUT IDEOGRAPH-"
+
+      REPLACE_COUNT = 500
+      REPLACE_BASE = ?[.ord
 
       def initialize_index
         @index = {
@@ -32,7 +36,7 @@ module Unicoder
             FINAL: [""],
           },
         }
-        # @words = []
+        @words = []
         @range_start = nil
       end
 
@@ -68,8 +72,11 @@ module Unicoder
             # ignore
           else
             assign :NAMES, line["codepoint"].to_i(16), line["name"]
+            @words += line["name"].split
           end
         end
+
+        replace_common_words! :NAMES, @words, REPLACE_COUNT, REPLACE_BASE
 
         parse_file :name_aliases, :line, regex: /^(?<codepoint>.+?);(?<alias>.+?);(?<type>.*)$/ do |line|
           @index[:ALIASES][get_key[line["codepoint"].to_i(16)]] ||= {}

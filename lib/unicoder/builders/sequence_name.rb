@@ -2,12 +2,18 @@ module Unicoder
   module Builder
     class SequenceName
       include Builder
+      include ReplaceCommonWords
+
+      REPLACE_COUNT = 100
+      REPLACE_BASE = ?{.ord
+      REPLACE_MIN_WORD_LENGTH = 3
 
       def initialize_index
         @index = {
           SEQUENCES: {},
           SEQUENCES_NOT_QUALIFIED: {},
         }
+        @words = []
       end
 
       def assign_codepoint(codepoints, value, idx = @index[:SEQUENCES], combine: false)
@@ -26,6 +32,8 @@ module Unicoder
         else
           idx[key] = value
         end
+
+        @words += value.split
       end
 
       def parse!
@@ -81,6 +89,9 @@ module Unicoder
             }
           end
         end
+
+        replace_common_words! :SEQUENCES, @words, REPLACE_COUNT, REPLACE_BASE, REPLACE_MIN_WORD_LENGTH
+        replace_common_words! :SEQUENCES_NOT_QUALIFIED, @words, REPLACE_COUNT, REPLACE_BASE, REPLACE_MIN_WORD_LENGTH
       end
     end
   end
