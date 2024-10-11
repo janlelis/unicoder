@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.1.1
+
+- Fix bug related to unsafe characters
+- Fix squared CJK
+
 ### 1.1.0
 
 - Improve name index size: Support ranges

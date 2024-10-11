@@ -68,7 +68,7 @@ module Unicoder
             elsif line["name"] != "<control>"
               raise ArgumentError, "inconsistent range found in data, don't know what to do"
             end
-          elsif line["name"] =~ Regexp.union(@index[:CP_RANGES].keys)
+          elsif line["name"] =~ Regexp.union(@index[:CP_RANGES].keys.map{/^#{_1}/})
             # ignore
           else
             assign :NAMES, line["codepoint"].to_i(16), line["name"]
