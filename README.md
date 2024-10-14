@@ -39,6 +39,7 @@ Index Name    | Module
 --------------|----
 name, sequence\_name, type | [unicode-name.js](https://github.com/janlelis/unicode-name.js)
 numeric\_value| [unicode-number.js](https://github.com/janlelis/unicode-number.js)
+scripts | [unicode-scripts.js](https://github.com/janlelis/unicode-scripts.js)
 
 ## MIT License
 
