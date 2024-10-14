@@ -4,6 +4,7 @@
 
 - Fix bug related to unsafe characters
 - Fix squared CJK
+- Small adjustments for scripts and blocks index builders
 
 ### 1.1.0
 
