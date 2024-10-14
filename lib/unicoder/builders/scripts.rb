@@ -10,6 +10,12 @@ module Unicoder
           SCRIPT_EXTENSIONS: {},
           SCRIPT_ALIASES: {},
           SCRIPT_NAMES: [],
+          OFFSETS: [
+            0x10000,
+            0x1000,
+            0x100,
+            0x10
+          ],
         }
         @reverse_script_names = {}
         @reverse_script_extension_names = {}
@@ -19,6 +25,17 @@ module Unicoder
         extension_scripts_string.split(" ").map{ |extension_script|
           @reverse_script_extension_names[extension_script]
         }
+      end
+
+      # TODO refactor how multiple indexes are organized
+      def assign_classic(sub_index_name, codepoint, value)
+        idx = @index[sub_index_name]
+
+        if option =~ /charkeys/
+          idx[[codepoint].pack("U*")] = value
+        else
+          idx[codepoint] = value
+        end
       end
 
       def parse!
@@ -47,10 +64,10 @@ module Unicoder
         parse_file :script_extensions, :line, regex: /^(?<from>\S+?)(\.\.(?<to>\S+))?\s+; (?<scripts>.+?) #.*$/ do |line|
           if line["to"]
             (line["from"].to_i(16)..line["to"].to_i(16)).each{ |codepoint|
-              @index[:SCRIPT_EXTENSIONS][codepoint] = lookup_extension_names(line["scripts"])
+              assign_classic :SCRIPT_EXTENSIONS, codepoint, lookup_extension_names(line["scripts"])
             }
           else
-            @index[:SCRIPT_EXTENSIONS][line["from"].to_i(16)] = lookup_extension_names(line["scripts"])
+            assign_classic :SCRIPT_EXTENSIONS, line["from"].to_i(16), lookup_extension_names(line["scripts"])
           end
         end
       end
