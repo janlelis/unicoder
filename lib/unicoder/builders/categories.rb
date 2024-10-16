@@ -9,6 +9,12 @@ module Unicoder
         @index = {
           CATEGORIES: [],
           CATEGORY_NAMES: {},
+          OFFSETS: [
+            0x10000,
+            0x1000,
+            0x100,
+            0x10
+          ],
         }
         @range_start = nil
       end
