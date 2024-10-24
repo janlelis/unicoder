@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.1.2
+
+- Update CLDR to v46
+
 ### 1.1.1
 
 - Fix bug related to unsafe characters

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Unicoder
-  VERSION = "1.1.1"
+  VERSION = "1.1.2"
 
   UNICODE_VERSIONS = %w[
     16.0.0
@@ -57,7 +57,7 @@ module Unicoder
 
   IVD_VERSION = "2022-09-13"
 
-  CLDR_VERSION = "45"
+  CLDR_VERSION = "46"
 
   UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public"
 
