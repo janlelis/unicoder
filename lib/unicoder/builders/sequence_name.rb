@@ -11,7 +11,7 @@ module Unicoder
       def initialize_index
         @index = {
           SEQUENCES: {},
-          SEQUENCES_NOT_QUALIFIED: {},
+          EMOJI_NOT_QUALIFIED: {},
         }
         @words = []
       end
@@ -74,8 +74,12 @@ module Unicoder
           name = line["name"].gsub(/\\x{(\h+)}/){ [$1.to_i(16)].pack("U") }.upcase
           codepoints = line["codepoints"].split.map{|cp| cp.to_i(16) }
           assign_codepoint codepoints, name
+
+
+          # Build all combinations of VS16 present and missing and add to second index
           if codepoints.include?(0xFE0F)
-            # Build all combinations of VS16 present and missing
+            sequence = codepoints.pack("U*")
+
             codepoints.slice_after(0xFE0F).reduce([[]]){|acc,cur|
               if cur.include? 0xFE0F
                 acc.flat_map{|prev| [prev + (cur - [0xFE0F]), prev + cur] }
@@ -85,13 +89,13 @@ module Unicoder
             }.
             select {|sub_codepoints| sub_codepoints != codepoints }.
             each { |sub_codepoints|
-              assign_codepoint (sub_codepoints), name, @index[:SEQUENCES_NOT_QUALIFIED]
+              sub_sequence = sub_codepoints.pack("U*")
+              @index[:EMOJI_NOT_QUALIFIED][sub_sequence] = sequence
             }
           end
         end
 
         replace_common_words! :SEQUENCES, @words, REPLACE_COUNT, REPLACE_BASE, REPLACE_MIN_WORD_LENGTH
-        replace_common_words! :SEQUENCES_NOT_QUALIFIED, @words, REPLACE_COUNT, REPLACE_BASE, REPLACE_MIN_WORD_LENGTH
       end
     end
   end

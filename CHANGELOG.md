@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.2.0
+
+- Change format for sequence_name's sub-index for unqalified Emoji sequences
+
 ### 1.1.2
 
 - Update CLDR to v46

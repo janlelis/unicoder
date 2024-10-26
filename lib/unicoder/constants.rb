@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Unicoder
-  VERSION = "1.1.2"
+  VERSION = "1.2.0"
 
   UNICODE_VERSIONS = %w[
     16.0.0
