@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.2.1
+
+- name: Fix some CJK Compatibility Ideographs not declared in CP_RANGES
+
 ### 1.2.0
 
 - Change format for sequence_name's sub-index for unqalified Emoji sequences

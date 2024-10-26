@@ -27,7 +27,7 @@ module Unicoder
             "EGYPTIAN HIEROGLYPH-" => [[0x13460, 0x143FA]],
             "KHITAN SMALL SCRIPT CHARACTER-" => [[0x18B00, 0x18CFF]],
             "NUSHU CHARACTER-" => [[0x1B170, 0x1B2FB]],
-            "CJK COMPATIBILITY IDEOGRAPH-" => [[0x2F800, 0x2FA1D]],
+            "CJK COMPATIBILITY IDEOGRAPH-" => [[0xF900, 0xFAFF], [0x2F800, 0x2FA1D]],
           },
           # see https://en.wikipedia.org/wiki/Korean_language_and_computers#Hangul_Syllables_Area
           JAMO: {
