@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Unicoder
-  VERSION = "1.2.1"
+  VERSION = "1.3.0"
 
   UNICODE_VERSIONS = %w[
     16.0.0
@@ -69,6 +69,7 @@ module Unicoder
     name_aliases:              "/UNICODE_VERSION/ucd/NameAliases.txt",
     confusables:               "/security/UNICODE_VERSION/confusables.txt",
     blocks:                    "/UNICODE_VERSION/ucd/Blocks.txt",
+    core_properties:           "/UNICODE_VERSION/ucd/DerivedCoreProperties.txt",
     scripts:                   "/UNICODE_VERSION/ucd/Scripts.txt",
     script_extensions:         "/UNICODE_VERSION/ucd/ScriptExtensions.txt",
     property_value_aliases:    "/UNICODE_VERSION/ucd/PropertyValueAliases.txt",

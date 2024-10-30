@@ -73,8 +73,18 @@ module Unicoder
       file = File.read(LOCAL_DATA_DIRECTORY + filename)
 
       if parse_mode == :line
+        active = !parse_options[:begin]
+        
         file.each_line{ |line|
-          yield Hash[ $~.names.zip( $~.captures ) ] if line =~ parse_options[:regex]
+          if !active && parse_options[:begin] && line.match?(parse_options[:begin])
+            active = true
+          elsif active && parse_options[:end] && line.match?(parse_options[:end])
+            active = false
+          end
+
+          if active
+            yield Hash[ $~.names.zip( $~.captures ) ] if line =~ parse_options[:regex]
+          end
         }
       elsif parse_mode == :xml
         require "oga"

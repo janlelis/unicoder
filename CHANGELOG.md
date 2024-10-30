@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.3.0
+
+- confusable: Add ignorables
+- confusable: Nest index and make ESM/charkeys version, fix ";"
+
 ### 1.2.1
 
 - name: Fix some CJK Compatibility Ideographs not declared in CP_RANGES
