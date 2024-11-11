@@ -36,7 +36,10 @@ module Unicoder
       }.freeze
 
       def initialize_index
-        @index = []
+        @index = {
+          WIDTH_ONE: [],
+          WIDTH_TWO: [],
+        }
         @ignorable = []
       end
 
@@ -65,37 +68,43 @@ module Unicoder
           end
 
           codepoints.each{ |codepoint|
-            assign_codepoint codepoint, determine_width(codepoint, line["category"], line["width"])
+            assign :WIDTH_ONE, codepoint, determine_width(codepoint, line["category"], line["width"], 1)
+            assign :WIDTH_TWO, codepoint, determine_width(codepoint, line["category"], line["width"], 2)
           }
         end
 
         # Assign Ranges
         ## Zero-width
         (ZERO_WIDTH_HANGUL | @ignorable).each{ |codepoint|
-          assign_codepoint codepoint, 0
+          assign :WIDTH_ONE, codepoint, 0
+          assign :WIDTH_TWO, codepoint, 0
         }
 
         ## Full-width
         WIDE_RANGES.each{ |codepoint|
-          assign_codepoint codepoint, 2
+          assign :WIDTH_ONE, codepoint, 2
+          assign :WIDTH_TWO, codepoint, 2
         }
 
         ## Table
         SPECIAL_WIDTHS.each{ |codepoint, value|
-          assign_codepoint codepoint, value
+          assign :WIDTH_ONE, codepoint, value
+          assign :WIDTH_TWO, codepoint, value
         }
 
-        4.times{ compress! }
+        # Compres Index
+        4.times{ compress! @index[:WIDTH_ONE] }
+        4.times{ compress! @index[:WIDTH_TWO] }
       end
 
-      def determine_width(codepoint, category, east_asian_width)
+      def determine_width(codepoint, category, east_asian_width, ambiguous)
         if  ( ZERO_WIDTH_CATEGORIES.include?(category) &&
               [codepoint].pack('U') !~ /\p{Cf}(?<=\p{Arabic})/ )
           0
         elsif east_asian_width == "F" || east_asian_width == "W"
           2
         elsif east_asian_width == "A"
-          :A
+          ambiguous == 1 ? nil : ambiguous
         else
           nil
         end
