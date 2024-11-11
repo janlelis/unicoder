@@ -7,12 +7,9 @@ module Unicoder
       IGNORE_CATEGORIES     = %w[Cs Co Cn].freeze
       ZERO_WIDTH_CATEGORIES = %w[Mn Me Cf].freeze
 
-      ZERO_WIDTH_RANGES = [
+      ZERO_WIDTH_HANGUL = [
         *0x1160..0x11FF, # HANGUL JUNGSEONG
         *0xD7B0..0xD7FF, # HANGUL JUNGSEONG
-        *0x2060..0x206F, # Ignorables
-        *0xFFF0..0xFFF8, # Ignorables
-        *0xE0000..0xE0FFF, # Ignorables
       ].freeze
 
       WIDE_RANGES = [
@@ -34,16 +31,31 @@ module Unicoder
         0xD    =>  0, # \r CARRIAGE RETURN
         0xE    =>  0, #    SHIFT OUT
         0xF    =>  0, #    SHIFT IN
-        0x00AD =>  nil, #    SOFT HYPHEN
+        0x00AD =>  nil, #    SOFT HYPHEN, nil = 1 (default)
         0x2E3A =>  2, #    TWO-EM DASH
         0x2E3B =>  3, #    THREE-EM DASH
       }.freeze
 
       def initialize_index
         @index = []
+        @ignorable = []
       end
 
       def parse!
+        # Find Ignorables
+        parse_file :core_properties, :line, begin: /^# Derived Property: Default_Ignorable_Code_Point$/, end: /^# ================================================$/, regex: /^(?<codepoints>\S+)\s+; Default_Ignorable_Code_Point.*$/ do |line|
+          if line["codepoints"]['..']
+            single_or_multiple_codepoints = Range.new(*line["codepoints"].split('..').map{ |codepoint|
+              codepoint.to_i(16)
+            })
+          else
+            single_or_multiple_codepoints = line["codepoints"].to_i(16)
+          end
+
+          @ignorable += [*single_or_multiple_codepoints]
+        end
+
+        # Assign based on East Asian Width
         parse_file :east_asian_width, :line, regex: /^(?<codepoints>\S+?)\s*;\s*(?<width>\S+)\s+#\s(?<category>\S+).*$/ do |line|
           next if IGNORE_CATEGORIES.include?(line["category"])
 
@@ -60,14 +72,18 @@ module Unicoder
           }
         end
 
-        ZERO_WIDTH_RANGES.each{ |codepoint|
+        # Assign Ranges
+        ## Zero-width
+        (ZERO_WIDTH_HANGUL | @ignorable).each{ |codepoint|
           assign_codepoint codepoint, 0
         }
 
+        ## Full-width
         WIDE_RANGES.each{ |codepoint|
           assign_codepoint codepoint, 2
         }
 
+        ## Table
         SPECIAL_WIDTHS.each{ |codepoint, value|
           assign_codepoint codepoint, value
         }
