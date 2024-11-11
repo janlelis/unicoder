@@ -4,7 +4,6 @@ module Unicoder
       include Builder
       include MultiDimensionalArrayBuilder
 
-      IGNORE_CATEGORIES     = %w[Cs Co Cn].freeze
       ZERO_WIDTH_CATEGORIES = %w[Mn Me Cf].freeze
 
       ZERO_WIDTH_HANGUL = [
@@ -57,8 +56,6 @@ module Unicoder
 
         # Assign based on East Asian Width
         parse_file :east_asian_width, :line, regex: /^(?<codepoints>\S+?)\s*;\s*(?<width>\S+)\s+#\s(?<category>\S+).*$/ do |line|
-          next if IGNORE_CATEGORIES.include?(line["category"])
-
           if line["codepoints"]['..']
             codepoints = Range.new(*line["codepoints"].split('..').map{ |codepoint|
               codepoint.to_i(16)
