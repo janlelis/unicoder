@@ -4,7 +4,7 @@ module Unicoder
       include Builder
       include MultiDimensionalArrayBuilder
 
-      ZERO_WIDTH_CATEGORIES = %w[Mn Me Cf].freeze
+      ZERO_WIDTH_CATEGORIES = %w[Mn Me Zl Zp Cf].freeze
 
       ZERO_WIDTH_HANGUL = [
         *0x1160..0x11FF, # HANGUL JUNGSEONG
@@ -30,7 +30,8 @@ module Unicoder
         0xD    =>  0, # \r CARRIAGE RETURN
         0xE    =>  0, #    SHIFT OUT
         0xF    =>  0, #    SHIFT IN
-        0x00AD =>  nil, #    SOFT HYPHEN, nil = 1 (default)
+        # 0x85   =>  0, #    NEXT LINE
+        0xAD   =>  nil, #  SOFT HYPHEN, nil = 1 (default)
         0x2E3A =>  2, #    TWO-EM DASH
         0x2E3B =>  3, #    THREE-EM DASH
       }.freeze
@@ -95,6 +96,8 @@ module Unicoder
         # Compres Index
         4.times{ compress! @index[:WIDTH_ONE] }
         4.times{ compress! @index[:WIDTH_TWO] }
+        remove_trailing_nils! @index[:WIDTH_ONE]
+        remove_trailing_nils! @index[:WIDTH_TWO]
       end
 
       def determine_width(codepoint, category, east_asian_width, ambiguous)
