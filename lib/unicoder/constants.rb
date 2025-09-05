@@ -4,6 +4,7 @@ module Unicoder
   VERSION = "1.3.0"
 
   UNICODE_VERSIONS = %w[
+    17.0.0
     16.0.0
     15.1.0
     15.0.0
@@ -22,6 +23,7 @@ module Unicoder
   CURRENT_UNICODE_VERSION = UNICODE_VERSIONS.first
 
   EMOJI_VERSIONS = %w[
+   17.0
    16.0
    15.1
    15.0
@@ -38,6 +40,7 @@ module Unicoder
   ].freeze
 
   EMOJI_RELATED_UNICODE_VERSIONS = {
+   "17.0" => "17.0.0",
    "16.0" => "16.0.0",
    "15.1" => "15.1.0",
    "15.0" => "15.0.0",
@@ -55,7 +58,7 @@ module Unicoder
 
   CURRENT_EMOJI_VERSION = EMOJI_VERSIONS.first
 
-  IVD_VERSION = "2022-09-13"
+  IVD_VERSION = "2025-07-14"
 
   CLDR_VERSION = "47"
 
