@@ -62,7 +62,7 @@ module Unicoder
 
   CLDR_VERSION = "47"
 
-  UNICODE_DATA_ENDPOINT = "ftp://ftp.unicode.org/Public"
+  UNICODE_DATA_ENDPOINT = "http://ftp.unicode.org/Public"
 
   LOCAL_DATA_DIRECTORY = File.expand_path(File.dirname(__FILE__) + "/../../data/unicode").freeze
 
