@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 1.4.0
+
+- Update Unicode and Emoji to 17.0
+  - Some files now have a new location in UCD
+- Update CLDR to v46
+- Update IVD to 2025-07-14
+
 ### 1.3.0
 
 - confusable: Add ignorables
