@@ -60,7 +60,7 @@ module Unicoder
 
   IVD_VERSION = "2025-07-14"
 
-  CLDR_VERSION = "47"
+  CLDR_VERSION = "48"
 
   UNICODE_DATA_ENDPOINT = "http://ftp.unicode.org/Public"
 
@@ -86,11 +86,14 @@ module Unicoder
     ivd_sequences:             "https://www.unicode.org/ivd/data/#{IVD_VERSION}/IVD_Sequences.txt",
     # emoji_data:                "/EMOJI_VERSION/ucd/emoji/",
     emoji_data:                "/EMOJI_RELATED_VERSION/ucd/emoji/emoji-data.txt",
-    emoji_sequences:           "/emoji/EMOJI_VERSION/emoji-sequences.txt",
+    # emoji_sequences:           "/emoji/EMOJI_VERSION/emoji-sequences.txt",
+    emoji_sequences:           "/EMOJI_RELATED_VERSION/emoji/emoji-sequences.txt",
     # emoji_variation_sequences: "/emoji/EMOJI_VERSION/emoji-variation-sequences.txt",
     emoji_variation_sequences: "/EMOJI_RELATED_VERSION/ucd/emoji/emoji-variation-sequences.txt",
-    emoji_zwj_sequences:       "/emoji/EMOJI_VERSION/emoji-zwj-sequences.txt",
-    emoji_test:                "/emoji/EMOJI_VERSION/emoji-test.txt",
+    # emoji_zwj_sequences:       "/emoji/EMOJI_VERSION/emoji-zwj-sequences.txt",
+    emoji_zwj_sequences:       "/EMOJI_RELATED_VERSION/emoji/emoji-zwj-sequences.txt",
+    # emoji_test:                "/emoji/EMOJI_VERSION/emoji-test.txt",
+    emoji_test:                "/EMOJI_RELATED_VERSION/emoji/emoji-test.txt",
     # valid_subdivisions:        "https://www.unicode.org/repos/cldr/tags/release-#{CLDR_VERSION}/common/validity/subdivision.xml",
     valid_subdivisions:        "https://raw.githubusercontent.com/unicode-org/cldr/release-#{CLDR_VERSION}/common/validity/subdivision.xml",
     # ""
