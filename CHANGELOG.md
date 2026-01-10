@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 1.5.0
+
+- New Emoji locations
+- Update CLDR to v48
+- Allow Ruby 4.0
+
 ### 1.4.0
 
 - Update Unicode and Emoji to 17.0
