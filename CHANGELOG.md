@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.6.0
+
+- Update Unicode and Emoji to 18.0
+- Update IVD to 2026-08-03
+
 ### 1.5.0
 
 - New Emoji locations

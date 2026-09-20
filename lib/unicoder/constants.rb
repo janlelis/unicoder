@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module Unicoder
-  VERSION = "1.5.0"
+  VERSION = "1.6.0"
 
   UNICODE_VERSIONS = %w[
+    18.0.0
     17.0.0
     16.0.0
     15.1.0
@@ -23,6 +24,7 @@ module Unicoder
   CURRENT_UNICODE_VERSION = UNICODE_VERSIONS.first
 
   EMOJI_VERSIONS = %w[
+   18.0
    17.0
    16.0
    15.1
@@ -40,6 +42,7 @@ module Unicoder
   ].freeze
 
   EMOJI_RELATED_UNICODE_VERSIONS = {
+   "18.0" => "18.0.0",
    "17.0" => "17.0.0",
    "16.0" => "16.0.0",
    "15.1" => "15.1.0",
@@ -58,7 +61,7 @@ module Unicoder
 
   CURRENT_EMOJI_VERSION = EMOJI_VERSIONS.first
 
-  IVD_VERSION = "2025-07-14"
+  IVD_VERSION = "2026-08-03"
 
   CLDR_VERSION = "48"
 
